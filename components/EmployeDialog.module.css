@@ -1,0 +1,83 @@
+.title {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600 !important;
+}
+
+.content {
+  padding: 24px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.formGroup label {
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.formGroup input,
+.formGroup select {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.inputIcon {
+  position: relative;
+}
+
+.inputIcon svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 20px;
+}
+
+.inputIcon input {
+  padding-left: 46px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.actions {
+  padding: 20px 24px !important;
+}
+
+.actions button:first-child {
+  border-radius: 8px;
+}
+
+.actions button:last-child {
+  border-radius: 8px;
+  background: #2563eb;
+}
+
+.actions button:last-child:hover {
+  background: #2563eb;
+}

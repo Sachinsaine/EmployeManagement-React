@@ -1,0 +1,143 @@
+.employeTablecontainer {
+  margin: 30px 40px;
+  display: grid;
+  grid-template-columns: 1fr 180px 180px;
+  gap: 18px;
+  align-items: center;
+}
+
+.searchBox {
+  position: relative;
+}
+
+.searchBox svg {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: #94a3b8;
+}
+
+.searchBox input {
+  width: 100%;
+  height: 50px;
+  padding: 0 18px 0 50px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 15px;
+  color: #1e293b;
+  transition: 0.3s;
+}
+
+.searchBox input::placeholder {
+  color: #94a3b8;
+}
+
+.searchBox input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.employeTablecontainer select {
+  height: 50px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 0 15px;
+  font-size: 15px;
+  background: #fff;
+  color: #1e293b;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.employeTablecontainer select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.employeeCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 18px 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin: 15px 40px;
+  transition: all 0.3s ease;
+}
+
+.employeeCard:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #6366f1;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.employeeInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.employeeInfo h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.employeeInfo p {
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.actions svg {
+  font-size: 20px;
+  color: #64748b;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.actions svg:first-child:hover {
+  color: #2563eb;
+}
+
+.actions svg:last-child:hover {
+  color: #ef4444;
+}
+
+@media (max-width: 900px) {
+  .employeTablecontainer {
+    grid-template-columns: 1fr;
+  }
+
+  .employeTablecontainer select {
+    width: 100%;
+  }
+}

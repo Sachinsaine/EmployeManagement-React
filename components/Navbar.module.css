@@ -1,11 +1,10 @@
 .navCont {
   width: 100%;
   background: white;
-  padding: 18px 40px;
+  padding: 18px 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   border-bottom: 1px solid #e5e7eb;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
