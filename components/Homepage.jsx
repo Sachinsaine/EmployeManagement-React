@@ -4,11 +4,14 @@ import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { EmployeTable } from "./EmployeTable";
 import { Navbar } from "./Navbar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { EmployeDialog } from "./EmployeDialog";
+import { EmployeContext } from "../EmployeContext/EmployeContext";
 
 export const Homepage = () => {
   const [open, setOpen] = useState(false);
+  const { state } = useContext(EmployeContext);
+  console.log(state);
 
   const handleOpen = () => {
     setOpen(true);

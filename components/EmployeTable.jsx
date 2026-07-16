@@ -2,10 +2,14 @@ import styles from "./EmployeTable.module.css";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+// import { useContext } from "react";
+// import { EmployeContext } from "../EmployeContext/EmployeContext";
 
 export const EmployeTable = () => {
+  // const { state } = useContext(EmployeContext);
   return (
-    <div>
+    <form>
+      <h1></h1>
       <div className={styles.employeTablecontainer}>
         <div className={styles.searchBox}>
           <SearchOutlinedIcon />
@@ -42,6 +46,6 @@ export const EmployeTable = () => {
           <DeleteOutlineOutlinedIcon />
         </div>
       </div>
-    </div>
+    </form>
   );
 };
