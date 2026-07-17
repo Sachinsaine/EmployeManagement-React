@@ -132,6 +132,12 @@
   color: #ef4444;
 }
 
+form {
+  background: #fff;
+  padding: 10px 0px;
+  margin: 0px 40px;
+}
+
 @media (max-width: 900px) {
   .employeTablecontainer {
     grid-template-columns: 1fr;

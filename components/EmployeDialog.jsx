@@ -153,12 +153,19 @@ export const EmployeDialog = ({ open, handleClose }) => {
           color="primary"
           startIcon={<CheckIcon />}
           disabled={Object.values(state.employe).some((value) => !value)}
-          onClick={() =>
-            dispatch(
-              { type: "ADD_EMPLOYE", payload: state.employe },
-              handleClose(),
-            )
-          }
+          onClick={() => {
+            const employeeId = Math.floor(Math.random() * 100) + 1;
+
+            dispatch({
+              type: "ADD_EMPLOYE",
+              payload: {
+                ...state.employe,
+                id: employeeId,
+              },
+            });
+
+            handleClose();
+          }}
         >
           Add Employee
         </Button>

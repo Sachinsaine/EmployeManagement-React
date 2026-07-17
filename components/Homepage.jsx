@@ -4,13 +4,17 @@ import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { EmployeTable } from "./EmployeTable";
 import { Navbar } from "./Navbar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { EmployeDialog } from "./EmployeDialog";
-// import { EmployeContext } from "../EmployeContext/EmployeContext";
+import { EmployeContext } from "../EmployeContext/EmployeContext";
 
 export const Homepage = () => {
   const [open, setOpen] = useState(false);
-  // const { state } = useContext(EmployeContext);
+  const { state } = useContext(EmployeContext);
+  const totalEmployee = state.employees.length;
+  const totalActiveUsers = state.employees.filter(
+    (user) => user.status === "Active",
+  );
 
   const handleOpen = () => {
     setOpen(true);
@@ -27,21 +31,23 @@ export const Homepage = () => {
         <div className={styles.dataBox}>
           <PeopleAltOutlinedIcon />
           <div className={styles.data}>
-            <span>9</span>
+            <span> {totalEmployee} </span>
             <span>Total employees</span>
           </div>
         </div>
         <div className={styles.dataBox}>
           <ApartmentOutlinedIcon />
           <div className={styles.data}>
-            <span>9</span>
+            <span>7</span>
             <span>Departments</span>
           </div>
         </div>
         <div className={styles.dataBox}>
           <PersonOutlineOutlinedIcon />
           <div className={styles.data}>
-            <span>9</span>
+            <span>
+              {totalActiveUsers.length === 0 ? "0" : totalActiveUsers.length}
+            </span>
             <span>Active now</span>
           </div>
         </div>

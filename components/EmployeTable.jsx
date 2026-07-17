@@ -7,11 +7,9 @@ import { EmployeContext } from "../EmployeContext/EmployeContext";
 
 export const EmployeTable = () => {
   const { state } = useContext(EmployeContext);
-  console.log(state.employees);
 
   return (
     <form>
-      <h1></h1>
       <div className={styles.employeTablecontainer}>
         <div className={styles.searchBox}>
           <SearchOutlinedIcon />
@@ -33,25 +31,37 @@ export const EmployeTable = () => {
           <option value="">Inactive</option>
         </select>
       </div>
-      {state.employees.map((data) => {
-        return (
-          <div className={styles.employeeCard}>
-            <div className={styles.leftSection}>
-              <div className={styles.avatar}>AR</div>
+      {state.length === 0 ? (
+        <h1>There is no employee</h1>
+      ) : (
+        state.employees.map((data, index) => {
+          let firstLatter = data.name.split(" ");
+          let userName = firstLatter.map((user) =>
+            user.charAt(0).toUpperCase(),
+          );
 
-              <div className={styles.employeeInfo}>
-                <h3>{data.name} </h3>
-                <p>EMP-001 • {data.department}</p>
+          return (
+            <div key={index} className={styles.employeeCard}>
+              <div className={styles.leftSection}>
+                <div className={styles.avatar}> {userName} </div>
+
+                <div className={styles.employeeInfo}>
+                  <h3>{data.name} </h3>
+                  <p>
+                    EMP-{String(data.id).padStart(3, "0")} • {data.department} •{" "}
+                    {data.status}{" "}
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.actions}>
+                <EditOutlinedIcon />
+                <DeleteOutlineOutlinedIcon />
               </div>
             </div>
-
-            <div className={styles.actions}>
-              <EditOutlinedIcon />
-              <DeleteOutlineOutlinedIcon />
-            </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </form>
   );
 };
