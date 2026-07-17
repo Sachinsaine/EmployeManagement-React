@@ -2,11 +2,13 @@ import styles from "./EmployeTable.module.css";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-// import { useContext } from "react";
-// import { EmployeContext } from "../EmployeContext/EmployeContext";
+import { useContext } from "react";
+import { EmployeContext } from "../EmployeContext/EmployeContext";
 
 export const EmployeTable = () => {
-  // const { state } = useContext(EmployeContext);
+  const { state } = useContext(EmployeContext);
+  console.log(state.employees);
+
   return (
     <form>
       <h1></h1>
@@ -31,21 +33,25 @@ export const EmployeTable = () => {
           <option value="">Inactive</option>
         </select>
       </div>
-      <div className={styles.employeeCard}>
-        <div className={styles.leftSection}>
-          <div className={styles.avatar}>AR</div>
+      {state.employees.map((data) => {
+        return (
+          <div className={styles.employeeCard}>
+            <div className={styles.leftSection}>
+              <div className={styles.avatar}>AR</div>
 
-          <div className={styles.employeeInfo}>
-            <h3>Ananya Rao</h3>
-            <p>EMP-001 • Senior Frontend Engineer</p>
+              <div className={styles.employeeInfo}>
+                <h3>{data.name} </h3>
+                <p>EMP-001 • {data.department}</p>
+              </div>
+            </div>
+
+            <div className={styles.actions}>
+              <EditOutlinedIcon />
+              <DeleteOutlineOutlinedIcon />
+            </div>
           </div>
-        </div>
-
-        <div className={styles.actions}>
-          <EditOutlinedIcon />
-          <DeleteOutlineOutlinedIcon />
-        </div>
-      </div>
+        );
+      })}
     </form>
   );
 };

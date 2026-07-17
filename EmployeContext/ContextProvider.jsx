@@ -26,7 +26,7 @@ const reducer = (state, action) => {
       };
 
     case "ADD_EMPLOYE":
-      return { ...state, employees: [...state, action.payload] };
+      return { ...state, employees: [...state.employees, action.payload] };
 
     default:
       return state;
@@ -35,7 +35,6 @@ const reducer = (state, action) => {
 
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   return (
     <EmployeContext.Provider value={{ state, dispatch }}>
       {children}
