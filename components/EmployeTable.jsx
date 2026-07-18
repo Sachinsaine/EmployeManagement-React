@@ -5,15 +5,25 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useContext } from "react";
 import { EmployeContext } from "../EmployeContext/EmployeContext";
-// import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 export const EmployeTable = () => {
-  const { state, dispatch, input, setInput } = useContext(EmployeContext);
+  const { state, dispatch, input, setInput, sequal, setSequal } =
+    useContext(EmployeContext);
 
   let filterUsers = state.employees.filter((user) =>
     user.name.toLowerCase().includes(input),
   );
-  console.log(filterUsers);
+
+  const sortedUsers = [...filterUsers].sort((a, b) => {
+    const result = a.name.localeCompare(b.name);
+
+    return sequal ? result : -result;
+  });
+
+  const handleSqual = () => {
+    setSequal((prev) => !prev);
+  };
 
   return (
     <div className={styles.employee}>
@@ -51,12 +61,17 @@ export const EmployeTable = () => {
         >
           <div className={styles.action}>
             <span className={styles.actionCont}>
-              Employee <ArrowUpwardIcon fontSize="small" />{" "}
+              Employee{" "}
+              {sequal ? (
+                <ArrowUpwardIcon onClick={handleSqual} fontSize="small" />
+              ) : (
+                <ArrowDownwardIcon onClick={handleSqual} fontSize="small" />
+              )}
             </span>
             <span className={styles.actionCont}>ACTIONS</span>
           </div>
           <form>
-            {filterUsers.map((data, index) => {
+            {sortedUsers.map((data, index) => {
               let firstLatter = data.name.split(" ");
               let userName = firstLatter.map((user) =>
                 user.charAt(0).toUpperCase(),

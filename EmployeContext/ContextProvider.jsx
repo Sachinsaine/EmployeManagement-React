@@ -42,8 +42,11 @@ const reducer = (state, action) => {
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [input, setInput] = useState("");
+  const [sequal, setSequal] = useState(true);
   return (
-    <EmployeContext.Provider value={{ state, dispatch, input, setInput }}>
+    <EmployeContext.Provider
+      value={{ state, dispatch, input, setInput, sequal, setSequal }}
+    >
       {children}
     </EmployeContext.Provider>
   );
