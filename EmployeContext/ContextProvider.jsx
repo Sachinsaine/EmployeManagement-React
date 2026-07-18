@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { EmployeContext } from "./EmployeContext";
 
 let initialState = {
@@ -28,6 +28,12 @@ const reducer = (state, action) => {
     case "ADD_EMPLOYE":
       return { ...state, employees: [...state.employees, action.payload] };
 
+    case "REMOVE_EMPLOYE":
+      return {
+        ...state,
+        employees: state.employees.filter((user) => user.id !== action.payload),
+      };
+
     default:
       return state;
   }
@@ -35,8 +41,9 @@ const reducer = (state, action) => {
 
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [input, setInput] = useState("");
   return (
-    <EmployeContext.Provider value={{ state, dispatch }}>
+    <EmployeContext.Provider value={{ state, dispatch, input, setInput }}>
       {children}
     </EmployeContext.Provider>
   );

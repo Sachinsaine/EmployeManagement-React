@@ -2,18 +2,29 @@ import styles from "./EmployeTable.module.css";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useContext } from "react";
 import { EmployeContext } from "../EmployeContext/EmployeContext";
+// import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 export const EmployeTable = () => {
-  const { state } = useContext(EmployeContext);
+  const { state, dispatch, input, setInput } = useContext(EmployeContext);
+
+  let filterUsers = state.employees.filter((user) =>
+    user.name.toLowerCase().includes(input),
+  );
+  console.log(filterUsers);
 
   return (
-    <form>
+    <div className={styles.employee}>
       <div className={styles.employeTablecontainer}>
         <div className={styles.searchBox}>
           <SearchOutlinedIcon />
-          <input type="text" placeholder="Search an employee" />
+          <input
+            type="text"
+            placeholder="Search an employee"
+            onChange={(e) => setInput(e.target.value)}
+          />
         </div>
         <select name="All" id="">
           <option value="All">All</option>
@@ -31,37 +42,54 @@ export const EmployeTable = () => {
           <option value="">Inactive</option>
         </select>
       </div>
-      {state.length === 0 ? (
+      {state.employees.length === 0 ? (
         <h1>There is no employee</h1>
       ) : (
-        state.employees.map((data, index) => {
-          let firstLatter = data.name.split(" ");
-          let userName = firstLatter.map((user) =>
-            user.charAt(0).toUpperCase(),
-          );
+        <main
+          className={styles.EmployeTable}
+          style={{ display: state.employees.length === 0 ? "none" : "block" }}
+        >
+          <div className={styles.action}>
+            <span className={styles.actionCont}>
+              Employee <ArrowUpwardIcon fontSize="small" />{" "}
+            </span>
+            <span className={styles.actionCont}>ACTIONS</span>
+          </div>
+          <form>
+            {filterUsers.map((data, index) => {
+              let firstLatter = data.name.split(" ");
+              let userName = firstLatter.map((user) =>
+                user.charAt(0).toUpperCase(),
+              );
 
-          return (
-            <div key={index} className={styles.employeeCard}>
-              <div className={styles.leftSection}>
-                <div className={styles.avatar}> {userName} </div>
+              return (
+                <div key={index} className={styles.employeeCard}>
+                  <div className={styles.leftSection}>
+                    <div className={styles.avatar}> {userName} </div>
 
-                <div className={styles.employeeInfo}>
-                  <h3>{data.name} </h3>
-                  <p>
-                    EMP-{String(data.id).padStart(3, "0")} • {data.department} •{" "}
-                    {data.status}{" "}
-                  </p>
+                    <div className={styles.employeeInfo}>
+                      <h3>{data.name} </h3>
+                      <p>
+                        EMP-{String(data.id).padStart(3, "0")} •{" "}
+                        {data.department} • {data.status}{" "}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className={styles.actions}>
+                    <EditOutlinedIcon />
+                    <DeleteOutlineOutlinedIcon
+                      onClick={() =>
+                        dispatch({ type: "REMOVE_EMPLOYE", payload: data.id })
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-
-              <div className={styles.actions}>
-                <EditOutlinedIcon />
-                <DeleteOutlineOutlinedIcon />
-              </div>
-            </div>
-          );
-        })
+              );
+            })}
+          </form>
+        </main>
       )}
-    </form>
+    </div>
   );
 };
