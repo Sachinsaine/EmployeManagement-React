@@ -54,7 +54,7 @@ export const Homepage = () => {
         <div className={styles.dataBox}>
           <PersonOutlineOutlinedIcon />
           <div className={styles.data}>
-            <span>$999</span>
+            <span>$108,667</span>
             <span>Avg. salary</span>
           </div>
         </div>

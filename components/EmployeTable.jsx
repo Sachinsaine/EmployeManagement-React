@@ -8,14 +8,25 @@ import { EmployeContext } from "../EmployeContext/EmployeContext";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 export const EmployeTable = () => {
-  const { state, dispatch, input, setInput, sequal, setSequal } =
-    useContext(EmployeContext);
+  const {
+    state,
+    dispatch,
+    input,
+    setInput,
+    sequal,
+    setSequal,
+    dept,
+    setDept,
+    statusCheck,
+    setStatusCheck,
+  } = useContext(EmployeContext);
 
-  let filterUsers = state.employees.filter((user) =>
-    user.name.toLowerCase().includes(input),
-  );
+  const filteredUsers = state.employees
+    .filter((user) => user.name.toLowerCase().includes(input.toLowerCase()))
+    .filter((user) => dept === "All" || user.department === dept)
+    .filter((user) => statusCheck === "All" || user.status === statusCheck);
 
-  const sortedUsers = [...filterUsers].sort((a, b) => {
+  const sortedUsers = [...filteredUsers].sort((a, b) => {
     const result = a.name.localeCompare(b.name);
 
     return sequal ? result : -result;
@@ -24,6 +35,8 @@ export const EmployeTable = () => {
   const handleSqual = () => {
     setSequal((prev) => !prev);
   };
+
+  const numOfUsers = sortedUsers.length;
 
   return (
     <div className={styles.employee}>
@@ -36,20 +49,30 @@ export const EmployeTable = () => {
             onChange={(e) => setInput(e.target.value)}
           />
         </div>
-        <select name="All" id="">
+        <select
+          name="All"
+          id=""
+          value={dept}
+          onChange={(e) => setDept(e.target.value)}
+        >
           <option value="All">All</option>
-          <option value="">Design</option>
-          <option value="">Engineering</option>
-          <option value="">HR</option>
-          <option value="">Marketing</option>
-          <option value="">Product</option>
-          <option value="">Sales</option>
+          <option value="Design">Design</option>
+          <option value="Engineering">Engineering</option>
+          <option value="HR">HR</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Product">Product</option>
+          <option value="Sales">Sales</option>
         </select>
-        <select name="All" id="">
+        <select
+          name="All"
+          id=""
+          value={statusCheck}
+          onChange={(e) => setStatusCheck(e.target.value)}
+        >
           <option value="All">All</option>
-          <option value="">Active</option>
-          <option value="">On Leave</option>
-          <option value="">Inactive</option>
+          <option value="Active">Active</option>
+          <option value="On Leave">On Leave</option>
+          <option value="Inactive">Inactive</option>
         </select>
       </div>
       {state.employees.length === 0 ? (
@@ -63,9 +86,17 @@ export const EmployeTable = () => {
             <span className={styles.actionCont}>
               Employee{" "}
               {sequal ? (
-                <ArrowUpwardIcon onClick={handleSqual} fontSize="small" />
+                <ArrowUpwardIcon
+                  onClick={handleSqual}
+                  fontSize="small"
+                  style={{ cursor: "pointer" }}
+                />
               ) : (
-                <ArrowDownwardIcon onClick={handleSqual} fontSize="small" />
+                <ArrowDownwardIcon
+                  onClick={handleSqual}
+                  fontSize="small"
+                  style={{ cursor: "pointer" }}
+                />
               )}
             </span>
             <span className={styles.actionCont}>ACTIONS</span>
@@ -102,6 +133,7 @@ export const EmployeTable = () => {
                 </div>
               );
             })}
+            <div className={styles.total}>Showing {numOfUsers}</div>
           </form>
         </main>
       )}

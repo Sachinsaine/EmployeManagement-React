@@ -156,6 +156,9 @@ form {
 .actions svg:last-child:hover {
   color: #ef4444;
 }
+.total {
+  margin: 15px 20px;
+}
 
 @media (max-width: 900px) {
   .employeTablecontainer {
