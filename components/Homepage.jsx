@@ -4,9 +4,10 @@ import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { EmployeTable } from "./EmployeTable";
 import { Navbar } from "./Navbar";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { EmployeDialog } from "./EmployeDialog";
 import { EmployeContext } from "../EmployeContext/EmployeContext";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const Homepage = () => {
   const [open, setOpen] = useState(false);
@@ -16,13 +17,13 @@ export const Homepage = () => {
     (user) => user.status === "Active",
   );
 
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
   return (
     <div>
@@ -52,7 +53,7 @@ export const Homepage = () => {
           </div>
         </div>
         <div className={styles.dataBox}>
-          <PersonOutlineOutlinedIcon />
+          <AttachMoneyIcon />
           <div className={styles.data}>
             <span>$108,667</span>
             <span>Avg. salary</span>

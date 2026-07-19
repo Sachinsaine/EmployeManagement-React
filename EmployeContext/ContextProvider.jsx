@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { EmployeContext } from "./EmployeContext";
 
 const initialEmployee = {
@@ -11,9 +11,11 @@ const initialEmployee = {
   salary: "",
 };
 
-let initialState = {
+const savedEmployees = JSON.parse(localStorage.getItem("employees") || "[]");
+
+const initialState = {
   employe: initialEmployee,
-  employees: [],
+  employees: savedEmployees,
 };
 
 const reducer = (state, action) => {
@@ -47,10 +49,16 @@ const reducer = (state, action) => {
 
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const [input, setInput] = useState("");
   const [sequal, setSequal] = useState(true);
   const [dept, setDept] = useState("All");
   const [statusCheck, setStatusCheck] = useState("All");
+
+  useEffect(() => {
+    localStorage.setItem("employees", JSON.stringify(state.employees));
+  }, [state.employees]);
+
   return (
     <EmployeContext.Provider
       value={{

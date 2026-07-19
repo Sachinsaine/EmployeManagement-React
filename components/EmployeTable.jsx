@@ -3,9 +3,11 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import { useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { EmployeContext } from "../EmployeContext/EmployeContext";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
+import { toast } from "react-toastify";
 
 export const EmployeTable = () => {
   const {
@@ -21,10 +23,12 @@ export const EmployeTable = () => {
     setStatusCheck,
   } = useContext(EmployeContext);
 
-  const filteredUsers = state.employees
-    .filter((user) => user.name.toLowerCase().includes(input.toLowerCase()))
-    .filter((user) => dept === "All" || user.department === dept)
-    .filter((user) => statusCheck === "All" || user.status === statusCheck);
+  const filteredUsers = useMemo(() => {
+    return state.employees
+      .filter((user) => user.name.toLowerCase().includes(input.toLowerCase()))
+      .filter((user) => dept === "All" || user.department === dept)
+      .filter((user) => statusCheck === "All" || user.status === statusCheck);
+  }, [state.employees, input, dept, statusCheck]);
 
   const sortedUsers = [...filteredUsers].sort((a, b) => {
     const result = a.name.localeCompare(b.name);
@@ -32,9 +36,9 @@ export const EmployeTable = () => {
     return sequal ? result : -result;
   });
 
-  const handleSqual = () => {
+  const handleSqual = useCallback(() => {
     setSequal((prev) => !prev);
-  };
+  }, []);
 
   const numOfUsers = sortedUsers.length;
 
@@ -76,7 +80,17 @@ export const EmployeTable = () => {
         </select>
       </div>
       {state.employees.length === 0 ? (
-        <h1>There is no employee</h1>
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>
+            <PeopleAltOutlinedIcon />
+          </div>
+          <h2>No employees found</h2>
+          <p>
+            There are currently no employees to display.
+            <br />
+            Add a new employee to get started.
+          </p>
+        </div>
       ) : (
         <main
           className={styles.EmployeTable}
@@ -125,15 +139,20 @@ export const EmployeTable = () => {
                   <div className={styles.actions}>
                     <EditOutlinedIcon />
                     <DeleteOutlineOutlinedIcon
-                      onClick={() =>
-                        dispatch({ type: "REMOVE_EMPLOYE", payload: data.id })
-                      }
+                      onClick={() => {
+                        (dispatch({ type: "REMOVE_EMPLOYE", payload: data.id }),
+                          toast.error("Removed an employee"));
+                      }}
                     />
                   </div>
                 </div>
               );
             })}
-            <div className={styles.total}>Showing {numOfUsers}</div>
+            <div className={styles.total}>
+              <span>Showing</span>
+              <strong>{numOfUsers}</strong>
+              <span>employees</span>
+            </div>{" "}
           </form>
         </main>
       )}

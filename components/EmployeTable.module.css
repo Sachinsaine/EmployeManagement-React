@@ -156,8 +156,63 @@ form {
 .actions svg:last-child:hover {
   color: #ef4444;
 }
+
+.emptyState {
+  margin-top: 30px;
+  padding: 70px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.emptyIcon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #eff6ff;
+  font-size: 32px;
+}
+
+.emptyState h2 {
+  margin: 0 0 10px;
+  color: #0f172a;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.emptyState p {
+  margin: 0;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
 .total {
-  margin: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin: 18px 20px 5px;
+  padding-top: 15px;
+
+  border-top: 1px solid #e2e8f0;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+.total strong {
+  color: #2563eb;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 @media (max-width: 900px) {
@@ -167,5 +222,9 @@ form {
 
   .employeTablecontainer select {
     width: 100%;
+  }
+
+  .employee {
+    margin: 30px 20px 0px;
   }
 }

@@ -11,6 +11,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import styles from "./EmployeDialog.module.css";
 import { useContext } from "react";
 import { EmployeContext } from "../EmployeContext/EmployeContext";
+import { toast } from "react-toastify";
 
 export const EmployeDialog = ({ open, handleClose }) => {
   const { dispatch, state } = useContext(EmployeContext);
@@ -165,6 +166,7 @@ export const EmployeDialog = ({ open, handleClose }) => {
             });
 
             handleClose();
+            toast.success("Employee added succesfully");
           }}
         >
           Add Employee
