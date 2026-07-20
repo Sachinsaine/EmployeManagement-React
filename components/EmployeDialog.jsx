@@ -14,7 +14,9 @@ import { EmployeContext } from "../EmployeContext/EmployeContext";
 import { toast } from "react-toastify";
 
 export const EmployeDialog = ({ handleClose }) => {
-  const { dispatch, open, selectedEmploye } = useContext(EmployeContext);
+  const { dispatch, open, selectedEmploye, setSelectedEmploye } =
+    useContext(EmployeContext);
+    
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,6 +30,16 @@ export const EmployeDialog = ({ handleClose }) => {
   useEffect(() => {
     if (selectedEmploye) {
       setFormData(selectedEmploye);
+    } else {
+      setFormData({
+        name: "",
+        email: "",
+        jobTitle: "",
+        department: "",
+        status: "",
+        startDate: "",
+        salary: "",
+      });
     }
   }, [selectedEmploye]);
 
@@ -167,6 +179,7 @@ export const EmployeDialog = ({ handleClose }) => {
                 payload: formData,
               });
 
+              setSelectedEmploye(null);
               toast.success("Employee updated successfully");
             } else {
               const employeeId = Math.floor(Math.random() * 100) + 1;
