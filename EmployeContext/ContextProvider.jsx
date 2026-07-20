@@ -36,6 +36,14 @@ const reducer = (state, action) => {
         employe: initialEmployee,
       };
 
+    case "UPDATE_EMPLOYE":
+      return {
+        ...state,
+        employees: state.employees.map((user) =>
+          user.id === action.payload.id ? action.payload : user,
+        ),
+      };
+
     case "REMOVE_EMPLOYE":
       return {
         ...state,
@@ -49,11 +57,12 @@ const reducer = (state, action) => {
 
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const [input, setInput] = useState("");
   const [sequal, setSequal] = useState(true);
   const [dept, setDept] = useState("All");
   const [statusCheck, setStatusCheck] = useState("All");
+  const [selectedEmploye, setSelectedEmploye] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("employees", JSON.stringify(state.employees));
@@ -70,8 +79,12 @@ export const ContextProvider = ({ children }) => {
         setSequal,
         dept,
         setDept,
+        open,
+        setOpen,
         statusCheck,
         setStatusCheck,
+        selectedEmploye,
+        setSelectedEmploye,
       }}
     >
       {children}

@@ -9,12 +9,36 @@ import CheckIcon from "@mui/icons-material/Check";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 
 import styles from "./EmployeDialog.module.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { EmployeContext } from "../EmployeContext/EmployeContext";
 import { toast } from "react-toastify";
 
-export const EmployeDialog = ({ open, handleClose }) => {
-  const { dispatch, state } = useContext(EmployeContext);
+export const EmployeDialog = ({ handleClose }) => {
+  const { dispatch, open, selectedEmploye } = useContext(EmployeContext);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    jobTitle: "",
+    department: "",
+    status: "",
+    startDate: "",
+    salary: "",
+  });
+
+  useEffect(() => {
+    if (selectedEmploye) {
+      setFormData(selectedEmploye);
+    }
+  }, [selectedEmploye]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
@@ -28,15 +52,13 @@ export const EmployeDialog = ({ open, handleClose }) => {
       <div className={styles.content}>
         <div className={styles.formGroup}>
           <label>Full Name</label>
+
           <input
             type="text"
+            name="name"
             placeholder="e.g. Jordan Blake"
-            onChange={(e) =>
-              dispatch({
-                type: "UPDATE_FIELD",
-                payload: { name: "name", value: e.target.value },
-              })
-            }
+            value={formData.name}
+            onChange={handleChange}
           />
         </div>
 
@@ -45,30 +67,26 @@ export const EmployeDialog = ({ open, handleClose }) => {
 
           <div className={styles.inputIcon}>
             <EmailOutlinedIcon />
+
             <input
               type="email"
+              name="email"
               placeholder="name@company.com"
-              onChange={(e) =>
-                dispatch({
-                  type: "UPDATE_FIELD",
-                  payload: { name: "email", value: e.target.value },
-                })
-              }
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
         </div>
 
         <div className={styles.formGroup}>
           <label>Job Title</label>
+
           <input
             type="text"
+            name="jobTitle"
             placeholder="e.g. Product Designer"
-            onChange={(e) =>
-              dispatch({
-                type: "UPDATE_FIELD",
-                payload: { name: "jobTitle", value: e.target.value },
-              })
-            }
+            value={formData.jobTitle}
+            onChange={handleChange}
           />
         </div>
 
@@ -77,12 +95,9 @@ export const EmployeDialog = ({ open, handleClose }) => {
             <label>Department</label>
 
             <select
-              onChange={(e) =>
-                dispatch({
-                  type: "UPDATE_FIELD",
-                  payload: { name: "department", value: e.target.value },
-                })
-              }
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
             >
               <option value="">Select Department</option>
               <option value="Engineering">Engineering</option>
@@ -97,12 +112,9 @@ export const EmployeDialog = ({ open, handleClose }) => {
             <label>Status</label>
 
             <select
-              onChange={(e) =>
-                dispatch({
-                  type: "UPDATE_FIELD",
-                  payload: { name: "status", value: e.target.value },
-                })
-              }
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
             >
               <option value="">Select Status</option>
               <option value="Active">Active</option>
@@ -118,12 +130,9 @@ export const EmployeDialog = ({ open, handleClose }) => {
 
             <input
               type="date"
-              onChange={(e) =>
-                dispatch({
-                  type: "UPDATE_FIELD",
-                  payload: { name: "startDate", value: e.target.value },
-                })
-              }
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
             />
           </div>
 
@@ -132,13 +141,10 @@ export const EmployeDialog = ({ open, handleClose }) => {
 
             <input
               type="number"
+              name="salary"
               placeholder="90000"
-              onChange={(e) =>
-                dispatch({
-                  type: "UPDATE_FIELD",
-                  payload: { name: "salary", value: e.target.value },
-                })
-              }
+              value={formData.salary}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -153,23 +159,33 @@ export const EmployeDialog = ({ open, handleClose }) => {
           variant="contained"
           color="primary"
           startIcon={<CheckIcon />}
-          disabled={Object.values(state.employe).some((value) => !value)}
+          disabled={Object.values(formData).some((value) => !value)}
           onClick={() => {
-            const employeeId = Math.floor(Math.random() * 100) + 1;
+            if (selectedEmploye) {
+              dispatch({
+                type: "UPDATE_EMPLOYE",
+                payload: formData,
+              });
 
-            dispatch({
-              type: "ADD_EMPLOYE",
-              payload: {
-                ...state.employe,
-                id: employeeId,
-              },
-            });
+              toast.success("Employee updated successfully");
+            } else {
+              const employeeId = Math.floor(Math.random() * 100) + 1;
+
+              dispatch({
+                type: "ADD_EMPLOYE",
+                payload: {
+                  ...formData,
+                  id: employeeId,
+                },
+              });
+
+              toast.success("Employee added successfully");
+            }
 
             handleClose();
-            toast.success("Employee added succesfully");
           }}
         >
-          Add Employee
+          {selectedEmploye ? "Update Employee" : "Add Employee"}
         </Button>
       </DialogActions>
     </Dialog>

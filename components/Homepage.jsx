@@ -4,14 +4,13 @@ import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { EmployeTable } from "./EmployeTable";
 import { Navbar } from "./Navbar";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext } from "react";
 import { EmployeDialog } from "./EmployeDialog";
 import { EmployeContext } from "../EmployeContext/EmployeContext";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const Homepage = () => {
-  const [open, setOpen] = useState(false);
-  const { state } = useContext(EmployeContext);
+  const { open, setOpen, state } = useContext(EmployeContext);
   const totalEmployee = state.employees.length;
   const totalActiveUsers = state.employees.filter(
     (user) => user.status === "Active",

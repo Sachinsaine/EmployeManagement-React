@@ -19,8 +19,10 @@ export const EmployeTable = () => {
     setSequal,
     dept,
     setDept,
+    setOpen,
     statusCheck,
     setStatusCheck,
+    setSelectedEmploye,
   } = useContext(EmployeContext);
 
   const filteredUsers = useMemo(() => {
@@ -39,6 +41,11 @@ export const EmployeTable = () => {
   const handleSqual = useCallback(() => {
     setSequal((prev) => !prev);
   }, []);
+
+  const handleEdit = (userData) => {
+    setSelectedEmploye(userData);
+    setOpen(true);
+  };
 
   const numOfUsers = sortedUsers.length;
 
@@ -137,7 +144,7 @@ export const EmployeTable = () => {
                   </div>
 
                   <div className={styles.actions}>
-                    <EditOutlinedIcon />
+                    <EditOutlinedIcon onClick={() => handleEdit(data)} />
                     <DeleteOutlineOutlinedIcon
                       onClick={() => {
                         (dispatch({ type: "REMOVE_EMPLOYE", payload: data.id }),
