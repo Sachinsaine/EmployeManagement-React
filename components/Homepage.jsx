@@ -10,7 +10,8 @@ import { EmployeContext } from "../EmployeContext/EmployeContext";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const Homepage = () => {
-  const { open, setOpen, state } = useContext(EmployeContext);
+  const { open, setOpen, state, setSelectedEmploye } =
+    useContext(EmployeContext);
   const totalEmployee = state.employees.length;
   const totalActiveUsers = state.employees.filter(
     (user) => user.status === "Active",
@@ -21,6 +22,7 @@ export const Homepage = () => {
   }, []);
 
   const handleClose = useCallback(() => {
+    setSelectedEmploye(null);
     setOpen(false);
   }, []);
 
